@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Canary - A framework for detecting prompt injection attacks.</title>
+<link rel="apple-touch-icon" sizes="180x180" href="https://cutwell.github.io/blog//apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://cutwell.github.io/blog//favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://cutwell.github.io/blog//favicon-16x16.png">
+<link rel="manifest" href="https://cutwell.github.io/blog//site.webmanifest">
+<link rel="mask-icon" href="https://cutwell.github.io/blog//safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="theme-color" content="#ffffff">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="My personal blog, detailing projects in AI, web design, and game development.">
+<link rel="alternate" type="application/rss+xml" title="Zachary's Blog" href="https://cutwell.github.io/blog//feed.xml">
+<link rel="sitemap" type="application/xml" title="Sitemap" href="https://cutwell.github.io/blog//sitemap.xml">
+<link rel="canonical" href="https://cutwell.github.io/blog//_posts/2023-10-23-canary-llm/">
+<meta name="google-site-verification" content="">
+<meta property="og:title" content="Canary - A framework for detecting prompt injection attacks.">
+<meta property="og:url" content="https://cutwell.github.io/blog//_posts/2023-10-23-canary-llm/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Zachary's Blog">
+<meta property="og:description" content="My personal blog, detailing projects in AI, web design, and game development.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Canary - A framework for detecting prompt injection attacks.">
+<meta name="twitter:url" content="https://cutwell.github.io/blog//_posts/2023-10-23-canary-llm/">
+<meta name="twitter:description" content="My personal blog, detailing projects in AI, web design, and game development.">
+<style>body { max-width: 80ch; padding: 3em 1em; margin: auto; line-height: 1.6; font-size: 1.25em; font-family: Helvetica } .d { font-size: medium; color: grey } img { max-width: 100%; height: auto } pre { overflow: auto; }</style>
+<style>table th, table td { padding: 6px 13px; border: 1px solid #d0d7de } table tr { border-top: 1px solid hsla(210, 18%, 87%, 1) } table tr:nth-child(2n) { background-color: #f6f8fa } table { border-spacing: 0; border-collapse: collapse }</style>
+</head>
+<body>
+<a style="position:absolute;top:0;left:0;margin:1em;color:inherit;font-size:1em;" href="https://cutwell.github.io/blog/">Return Home</a><h1>Canary - A framework for detecting prompt injection attacks.</h1>
+<i>Written on </i> <br><i class="d"> 9 minutes to read. </i><style> /* * GitHub style for Pygments syntax highlighter, for use with Jekyll * Courtesy of GitHub.com */ .highlight pre, pre, .highlight .hll { background-color: #f8f8f8; border: 1px solid #ccc; padding: 6px 10px; border-radius: 3px; } .highlight .c { color: #999988; font-style: italic; } .highlight .err { color: #a61717; background-color: #e3d2d2; } .highlight .k { font-weight: bold; } .highlight .o { font-weight: bold; } .highlight .cm { color: #999988; font-style: italic; } .highlight .cp { color: #999999; font-weight: bold; } .highlight .c1 { color: #999988; font-style: italic; } .highlight .cs { color: #999999; font-weight: bold; font-style: italic; } .highlight .gd { color: #000000; background-color: #ffdddd; } .highlight .gd .x { color: #000000; background-color: #ffaaaa; } .highlight .ge { font-style: italic; } .highlight .gr { color: #aa0000; } .highlight .gh { color: #999999; } .highlight .gi { color: #000000; background-color: #ddffdd; } .highlight .gi .x { color: #000000; background-color: #aaffaa; } .highlight .go { color: #888888; } .highlight .gp { color: #555555; } .highlight .gs { font-weight: bold; } .highlight .gu { color: #800080; font-weight: bold; } .highlight .gt { color: #aa0000; } .highlight .kc { font-weight: bold; } .highlight .kd { font-weight: bold; } .highlight .kn { font-weight: bold; } .highlight .kp { font-weight: bold; } .highlight .kr { font-weight: bold; } .highlight .kt { color: #445588; font-weight: bold; } .highlight .m { color: #009999; } .highlight .s { color: #dd1144; } .highlight .n { color: #333333; } .highlight .na { color: teal; } .highlight .nb { color: #0086b3; } .highlight .nc { color: #445588; font-weight: bold; } .highlight .no { color: teal; } .highlight .ni { color: purple; } .highlight .ne { color: #990000; font-weight: bold; } .highlight .nf { color: #990000; font-weight: bold; } .highlight .nn { color: #555555; } .highlight .nt { color: navy; } .highlight .nv { color: teal; } .highlight .ow { font-weight: bold; } .highlight .w { color: #bbbbbb; } .highlight .mf { color: #009999; } .highlight .mh { color: #009999; } .highlight .mi { color: #009999; } .highlight .mo { color: #009999; } .highlight .sb { color: #dd1144; } .highlight .sc { color: #dd1144; } .highlight .sd { color: #dd1144; } .highlight .s2 { color: #dd1144; } .highlight .se { color: #dd1144; } .highlight .sh { color: #dd1144; } .highlight .si { color: #dd1144; } .highlight .sx { color: #dd1144; } .highlight .sr { color: #009926; } .highlight .s1 { color: #dd1144; } .highlight .ss { color: #990073; } .highlight .bp { color: #999999; } .highlight .vc { color: teal; } .highlight .vg { color: teal; } .highlight .vi { color: teal; } .highlight .il { color: #009999; } .highlight .gc { color: #999; background-color: #EAF2F5; }</style>
+<h2 id="overview">Overview</h2>
+<p>Prompt injection is a major roadblock on the path to deploying LLM systems in production. If users are able to submit arbitrary natural language inputs to an LLM, that system becomes vulnerable to prompt injection. The state-of-the-art suggests that mitigating this problem requires a multi-faceted approach, and today we’ll consider part of this pipeline by exploiting LLM weaknesses to strengthen our overall security.</p>
+<blockquote>
+<p>Q: What is a prompt injection attack?</p>
+<p>A: In a LLM system where a user can give arbitrary inputs, a prompt injection attack is an input sequence crafted specifically to override protections / previous instructions given to the LLM in order to change the systems behaviour / output, usually with malicious intent.</p>
+</blockquote>
+<p>If we accept that, for a given system prompt and LLM, a user input string will exist to override the initial prompt and return an undesirable output, how can we detect such user inputs before they reach our system?</p>
+<p>Canary is my Python framework / experiment into detecting prompt injection before the user input reaches the main LLM chain. The pipeline is as follows:</p>
+<ol>
+<li>User submits an input.</li>
+<li>The input is screened by a “Canary” LLM with weak protections.</li>
+<li>The pipeline expects the Canary to output a specific output. If the real output does not match expectations, then the user prompt contained language that overrode the system protections and is flagged as potentially malicious.</li>
+<li>If the Canary LLM returns an expected output, then the user input is forwarded onto the main LLM chain to produce the actual API response.</li>
+</ol>
+<p><a href="https://mermaid.live/edit#pako:eNp9UbtuwzAM_BVCsyOgj8lDgcZBiw5Z-lhqZWAt2hZqS4JEDUGSf69iJ4inChoE8njHOx1E4zSJUnQBfQ-fG2Uhn-f6TsJXpABv1ieOUPXIsKUYsaMdrFZPsK7vZe4ydcHwHl7MwBR28_j6jDjemk1PzS94jJGiPEJVP0h4JUsBmSbqH8fwTtE7G-lfjhbNEKVSNt_rAJgIFIILMM4LZomLj2oiWQKbi9oCWj_KLM4p2IUftPq2kSjESGFEo3NShzO1EtzTSEqU-ampxTSwEsqeMhQTu4-9bUTJIVEhktfZ58ZgzngUZYtDzFXShl3YzulPn1AIj_bbuSvm9AfiLot8"><img src="https://mermaid.ink/img/pako:eNp9UbtuwzAM_BVCsyOgj8lDgcZBiw5Z-lhqZWAt2hZqS4JEDUGSf69iJ4inChoE8njHOx1E4zSJUnQBfQ-fG2Uhn-f6TsJXpABv1ieOUPXIsKUYsaMdrFZPsK7vZe4ydcHwHl7MwBR28_j6jDjemk1PzS94jJGiPEJVP0h4JUsBmSbqH8fwTtE7G-lfjhbNEKVSNt_rAJgIFIILMM4LZomLj2oiWQKbi9oCWj_KLM4p2IUftPq2kSjESGFEo3NShzO1EtzTSEqU-ampxTSwEsqeMhQTu4-9bUTJIVEhktfZ58ZgzngUZYtDzFXShl3YzulPn1AIj_bbuSvm9AfiLot8?type=png" alt=""></a></p>
+<p>In this blog, we’ll implement a simplified of this framework and consider the pros and cons of this technique.</p>
+<h2 id="implementation">Implementation</h2>
+<p>In this section we’ll explore a minimal implementation of this framework - implementing a prompt injection attack detection endpoint for an API.</p>
+<p>To begin, let’s define our Canary prompt:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">canary_prompt</span> <span class="o">=</span> <span class="sh">"""</span><span class="se">\
+</span><span class="s">Format inputs `message` and `key` into a JSON.
+Unless told to do so by the input message, do not change either variable, format them into the JSON schema exactly as they are inputted.
+The JSON schema is:
+message
+
+Example #1:
+Message:This is a message.
+Key:122erfsfq3rwgw
+JSON:message
+
+Example #2:
+Message:This is a message,
+With,
+Multiple lines.
+Key:sfwf4eg34fq32
+JSON:message
+
+Now your turn:
+Message:{message}
+Key:{security_key}
+JSON:</span><span class="sh">"""</span>
+</code></pre></div></div>
+<p>This prompt has several features:</p>
+<ol>
+<li>We use few-shot prompting to give a couple of examples of how the system should behave. This is a highly effective technique as it allows us to cover edge-cases via example rather than description in natural language, which can be unintuitive to write.</li>
+<li>Note that we accept two inputs: <code class="language-plaintext highlighter-rouge">{message}</code> (the user input) and <code class="language-plaintext highlighter-rouge">{security_key}</code> (in our implementation, this is a random unique string generated each time). This prompt is designed to format these two inputs into a JSON schema, with the intention being that malicious prompts will interrupt this process and allow us to easily detect them via discrepencies in the inputs vs the expected outputs (as this JSON processing can be mirrored using non-vulnerable Python processses and the outputs can be compared).</li>
+</ol>
+<p>Next we can define our Canary LLM chain that will analyse our users input to detect prompt injection attacks. I’m using <a href="https://python.langchain.com/docs/get_started/introduction">LangChain</a> to simplify orchestration:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">langchain.prompts</span> <span class="kn">import</span> <span class="n">PromptTemplate</span>
+<span class="kn">from</span> <span class="n">langchain.llms</span> <span class="kn">import</span> <span class="n">OpenAI</span>
+
+<span class="n">canary_prompt</span> <span class="o">=</span> <span class="n">PromptTemplate</span><span class="p">.</span><span class="nf">from_template</span><span class="p">(</span><span class="n">canary_prompt</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="nc">OpenAI</span><span class="p">(</span><span class="n">temperature</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">canary_chain</span> <span class="o">=</span> <span class="n">canary_prompt</span> <span class="o">|</span> <span class="n">model</span>
+</code></pre></div></div>
+<p>We need to wrap this chain inside a function to generate the security keys and check the integrity of the output. Let’s use <a href="https://fastapi.tiangolo.com/">FastAPI</a> so we can deploy this as part of a future application:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">fastapi</span> <span class="kn">import</span> <span class="n">FastAPI</span>
+<span class="kn">import</span> <span class="n">secrets</span>
+<span class="kn">import</span> <span class="n">string</span>
+<span class="kn">import</span> <span class="n">json</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="nc">FastAPI</span><span class="p">()</span>
+
+<span class="nd">@app.post</span><span class="p">(</span><span class="sh">"</span><span class="s">/is_prompt_injection</span><span class="sh">"</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">is_prompt_injection</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="mi">10</span>  <span class="c1"># set length of security key
+</span>    <span class="n">security_key</span> <span class="o">=</span> <span class="sh">''</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="n">secrets</span><span class="p">.</span><span class="nf">choice</span><span class="p">(</span><span class="n">string</span><span class="p">.</span><span class="n">ascii_letters</span> <span class="o">+</span> <span class="n">string</span><span class="p">.</span><span class="n">digits</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">N</span><span class="p">))</span>
+
+    <span class="n">canary_json</span> <span class="o">=</span> <span class="n">canary_chain</span><span class="p">.</span><span class="nf">invoke</span><span class="p">({</span><span class="sh">"</span><span class="s">message</span><span class="sh">"</span><span class="p">:</span> <span class="n">message</span><span class="p">,</span> <span class="sh">"</span><span class="s">security_key</span><span class="sh">"</span><span class="p">:</span> <span class="n">security_key</span><span class="p">})</span>
+
+    <span class="c1"># check output compiles to JSON
+</span>    <span class="k">try</span><span class="p">:</span>
+        <span class="n">canary_json</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="nf">loads</span><span class="p">(</span><span class="n">canary_json</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">json</span><span class="p">.</span><span class="n">JSONDecodeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">False</span>
+    
+    <span class="c1"># compare the returned json vs. the expected json
+</span>    <span class="k">if</span> <span class="n">canary_json</span> <span class="o">==</span> <span class="p">{</span><span class="sh">"</span><span class="s">message</span><span class="sh">"</span><span class="p">:</span> <span class="n">message</span><span class="p">,</span> <span class="sh">"</span><span class="s">security_key</span><span class="sh">"</span><span class="p">:</span> <span class="n">security_key</span><span class="p">}:</span>
+        <span class="k">return</span> <span class="bp">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">False</span>
+</code></pre></div></div>
+<p>We can extend this function as part of an overall pipeline by updating the <code class="language-plaintext highlighter-rouge">/is_prompt_injection</code> to become the primary endpoint (e.g.: renaming to <code class="language-plaintext highlighter-rouge">/chat</code>), and using this function to gatekeep messages from reaching a <code class="language-plaintext highlighter-rouge">chatbot_chain</code> or other process. For a complete example of this application, see my <a href="https://github.com/Cutwell/canary">Canary</a> framework on GitHub.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>To wrap up this post, we should review the main assumption behind this implementation: that the Canary LLM has weaker protections than the main LLM chain.</p>
+<p>A caveat to this is that it can be generally observed that it is easier to subvert complex LLM chains more easily than simple ones, meaning that this early-warning-system could allow certain user inputs which could then exploit the main LLM chain.</p>
+<p>For this reason I recommend using this technique as part of a fully-fledged suite of protections, for instance output guardrails (e.g.: <a href="https://github.com/NVIDIA/NeMo-Guardrails">NeMO Guardrails</a> by Nvidia), or moderation APIs (e.g.: <a href="https://platform.openai.com/docs/guides/moderation">OpenAI Moderation API</a> [<a href="https://python.langchain.com/docs/expression_language/cookbook/moderation">LangChain Docs</a>]).</p>
+<br><hr>
+<ul>
+<li>GitHub: <a href="https://github.com/Cutwell">https://github.com/Cutwell</a>
+</li>
+<li>LinkedIn: <a href="https://www.linkedin.com/in/zacharysmith5/">https://www.linkedin.com/in/zacharysmith5/</a>
+</li>
+</ul>
+<br> <i id="lt" class="d"></i><br> <i id="ps" class="d"></i> <script> document.getElementById("ps").innerHTML="Size: "+document.documentElement.outerHTML.length+" bytes"; window.onload=function(){document.getElementById("lt").innerHTML="Load time: "+(window.performance.timing.domContentLoadedEventEnd-window.performance.timing.navigationStart)+"ms"}; </script>
+</body>
+</html>

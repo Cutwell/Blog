@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>🦓 Can GPT-4 solve a logic puzzle?</title>
+<link rel="apple-touch-icon" sizes="180x180" href="https://cutwell.github.io/blog//apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://cutwell.github.io/blog//favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://cutwell.github.io/blog//favicon-16x16.png">
+<link rel="manifest" href="https://cutwell.github.io/blog//site.webmanifest">
+<link rel="mask-icon" href="https://cutwell.github.io/blog//safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="theme-color" content="#ffffff">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="My personal blog, detailing projects in AI, web design, and game development.">
+<link rel="alternate" type="application/rss+xml" title="Zachary's Blog" href="https://cutwell.github.io/blog//feed.xml">
+<link rel="sitemap" type="application/xml" title="Sitemap" href="https://cutwell.github.io/blog//sitemap.xml">
+<link rel="canonical" href="https://cutwell.github.io/blog//zebra-problem/">
+<meta name="google-site-verification" content="">
+<meta property="og:title" content="🦓 Can GPT-4 solve a logic puzzle?">
+<meta property="og:url" content="https://cutwell.github.io/blog//zebra-problem/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Zachary's Blog">
+<meta property="og:description" content="My personal blog, detailing projects in AI, web design, and game development.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="🦓 Can GPT-4 solve a logic puzzle?">
+<meta name="twitter:url" content="https://cutwell.github.io/blog//zebra-problem/">
+<meta name="twitter:description" content="My personal blog, detailing projects in AI, web design, and game development.">
+<style>body { max-width: 80ch; padding: 3em 1em; margin: auto; line-height: 1.6; font-size: 1.25em; font-family: Helvetica } .d { font-size: medium; color: grey } img { max-width: 100%; height: auto } pre { overflow: auto; }</style>
+<style>table th, table td { padding: 6px 13px; border: 1px solid #d0d7de } table tr { border-top: 1px solid hsla(210, 18%, 87%, 1) } table tr:nth-child(2n) { background-color: #f6f8fa } table { border-spacing: 0; border-collapse: collapse }</style>
+</head>
+<body>
+<a style="position:absolute;top:0;left:0;margin:1em;color:inherit;font-size:1em;" href="https://cutwell.github.io/blog/">Return Home</a><h1>🦓 Can GPT-4 solve a logic puzzle?</h1>
+<i>Written on March 18, 2023</i> <br><i class="d"> 27 minutes to read. </i><p><img src="/_posts/2023-03-19-zebra-problem/DALLE-a-zebra-solving-a-jigsaw-puzzle.png" alt="A zebra solving a jigsaw puzzle, DALLE2" width="1024" height="1024" loading="lazy"></p>
+<h4 id="constraint-satisfaction-using-chatgpt-3-and-gpt-4">Constraint satisfaction using ChatGPT-3 and GPT-4</h4>
+<p>GPT-3 (the basis for ChatGPT) and GPT-4 are making headlines for their problem solving abilities and next-level conversational responses. We decided to test these models against a well-known logic problem called the Zebra Problem. Commonly misattributed to Carol Lewis or Albert Einstein, it was published in Life International magazine on December 17, 1962. It has been used as a popular benchmark for testing constraint satisfaction algorithms.</p>
+<h2 id="prompt-engineering">Prompt engineering</h2>
+<p>In order to perform a fair test, we evaluated both models using the same prompt.</p>
+<p>First we primed the model as a “problem solving AI” with the following prompt:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>You are a problem solving AI. Read the problem carefully and answer the question in detail.
+</code></pre></div></div>
+<p>Then, we fed it the original text of the puzzle:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>There are five houses.
+The Englishman lives in the red house.
+The Spaniard owns the dog.
+Coffee is drunk in the green house.
+The Ukrainian drinks tea.
+The green house is immediately to the right of the ivory house.
+The Old Gold smoker owns snails.
+Kools are smoked in the yellow house.
+Milk is drunk in the middle house.
+The Norwegian lives in the first house.
+The man who smokes Chesterfields lives in the house next to the man with the fox.
+Kools are smoked in the house next to the house where the horse is kept.
+The Lucky Strike smoker drinks orange juice.
+The Japanese smokes Parliaments.
+The Norwegian lives next to the blue house.
+
+Now, who drinks water? Who owns the zebra?
+
+In the interest of clarity, it must be added that each of the five houses is painted a different color, and their inhabitants are of different national extractions, own different pets, drink different beverages and smoke different brands of American cigarets. One other thing: in statement 6, right means your right.
+</code></pre></div></div>
+<p>— Life International, December 17, 1962</p>
+<h2 id="talkative-machines">Talkative machines</h2>
+<p>Because we wanted highly verbose answers, to allow us to debug the models problem solving accurately, we encountered an issue where our models became <em>too</em> talkative. All models hit their response limits midway through answering the problem, requiring us to prompt the model to continue where it left off. The impact this might have had on the problem-solving capabilities of the model cannot be determined, and is a flaw in the experiment.</p>
+<p>The point where responses where stitched together are indicated with <code class="language-plaintext highlighter-rouge">[...]</code>. Often this occured mid-sentence, and the model correctly continued the sentence, giving the suggestion / illusion it was able to recover from the interruption.</p>
+<h2 id="testing">Testing</h2>
+<p>We tested the following language models on the OpenAI platform: <code class="language-plaintext highlighter-rouge">GPT-3.5</code>, <code class="language-plaintext highlighter-rouge">ChatGPT-3</code> and the newest gen. <code class="language-plaintext highlighter-rouge">GPT-4</code> and <code class="language-plaintext highlighter-rouge">ChatGPT-4</code>.</p>
+<h3 id="gpt-35">GPT-3.5</h3>
+<details> <summary>Complete GPT-3.5 response</summary><h4 id="complete-gpt-35-response">Complete GPT-3.5 response</h4>
+<p>Based on the given information, we can create a table to keep track of the different attributes of each house:</p>
+<table>
+<thead><tr>
+<th>House</th>
+<th>Color</th>
+<th>Nationality</th>
+<th>Drink</th>
+<th>Smoke</th>
+<th>Pet</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Yellow</td>
+<td>Norwegian</td>
+<td>Water</td>
+<td>Kools</td>
+<td>Fox</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Blue</td>
+<td>?</td>
+<td>?</td>
+<td>?</td>
+<td>?</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Red</td>
+<td>Englishman</td>
+<td>?</td>
+<td>Old Gold</td>
+<td>?</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Ivory</td>
+<td>?</td>
+<td>?</td>
+<td>?</td>
+<td>?</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Green</td>
+<td>?</td>
+<td>Coffee</td>
+<td>?</td>
+<td>Zebra</td>
+</tr>
+</tbody>
+</table>
+<p>From the given information, we can fill in some of the missing attributes:</p>
+<ul>
+<li>House 1 is yellow and the Norwegian lives there. They drink water and smoke Kools, and they have a fox.</li>
+<li>The Norwegian lives next to the blue house, so house 2 must be blue.</li>
+<li>The Englishman lives in the red house, so house 3 is red.</li>
+<li>The green house is immediately to the right of the ivory house, so house 4 must be green.</li>
+<li>Coffee is drunk in the green house, and milk is drunk in the middle house (which is house 3), so the Ukrainian must live in house 2 and drink tea.</li>
+<li>House 5 has a zebra, so the owner of the zebra is in house 5. We don’t know their nationality, drink, or cigarette brand yet.</li>
+<li>The Old Gold smoker owns snails, but we don’t know which house they live in.</li>
+<li>Kools are smoked in the yellow house and in the house next to the house where the horse is kept. So the horse must be in either house 1 or 2, and the Kools smoker must be in the other one. But we don’t know which house has the horse or which house the Kools smoker is in.</li>
+<li>The man who smokes Chesterfields lives in the house next to the man with the fox. So the Chesterfields smoker must be in either house 2 or 4, and the fox owner must be in the other one. But we don’t know which house has the fox or which house the Chesterfields smoker is in.</li>
+<li>The Lucky Strike smoker drinks orange juice, but we don’t know which house they live in.</li>
+<li>The Japanese smokes Parliaments, but we don’t know which house they live in.</li>
+</ul>
+<p>Now we can use some of the remaining clues to narrow down the possibilities:</p>
+<ul>
+<li>Only one house is left for the Old Gold smoker and their snails, so they must be in house 4.</li>
+<li>The Norwegian lives next to the blue house, so their house (house 1) must not be blue. Therefore, the blue house (house 2) must be where the Chesterfields smoker lives, and the fox must be in house 4. So the Chesterfields smoker must be in house 4, and the fox owner (who drinks nothing and smokes nothing) must be in house 2.</li>
+<li>Since the horse is not in house 1, it must be in house 2. Therefore, the Kools smoker must be in house 1, and the Norwegian drinks water.</li>
+<li>The Lucky Strike smoker must be in house 3, since that is the only house left with a drink (orange juice) that is not already assigned to someone.</li>
+<li>The Japanese smokes Parliaments, which means they must be in house 5 with the zebra.</li>
+</ul>
+<p>So the final solution is:</p>
+<table>
+<thead><tr>
+<th>House</th>
+<th>Color</th>
+<th>Nationality</th>
+<th>Drink</th>
+<th>Smoke</th>
+<th>Pet</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Yellow</td>
+<td>Norwegian</td>
+<td>Water</td>
+<td>Kools</td>
+<td>Fox</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Blue</td>
+<td>?</td>
+<td>?</td>
+<td>Chesterfields</td>
+<td>Horse</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Red</td>
+<td>Englishman</td>
+<td>Orange juice</td>
+<td>Lucky Strike</td>
+<td>?</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Ivory</td>
+<td>?</td>
+<td>Milk</td>
+<td>Old Gold</td>
+<td>Snails</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Green</td>
+<td>Japanese</td>
+<td>Coffee</td>
+<td>Parliaments</td>
+<td>Zebra</td>
+</tr>
+</tbody>
+</table>
+<p>Therefore, the Norwegian drinks water and the Japanese owns the zebra.</p></details><table>
+<thead><tr>
+<th>House</th>
+<th>Color</th>
+<th>Nationality</th>
+<th>Drink</th>
+<th>Smoke</th>
+<th>Pet</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Yellow</td>
+<td>Norwegian</td>
+<td>Water</td>
+<td>Kools</td>
+<td>Fox</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Blue</td>
+<td>?</td>
+<td>?</td>
+<td>Chesterfields</td>
+<td>Horse</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Red</td>
+<td>Englishman</td>
+<td>Orange juice</td>
+<td>Lucky Strike</td>
+<td>?</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Ivory</td>
+<td>?</td>
+<td>Milk</td>
+<td>Old Gold</td>
+<td>Snails</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Green</td>
+<td>Japanese</td>
+<td>Coffee</td>
+<td>Parliaments</td>
+<td>Zebra</td>
+</tr>
+</tbody>
+</table>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Therefore, the Norwegian drinks water and the Japanese owns the zebra.
+</code></pre></div></div>
+<h3 id="chatgpt-3">ChatGPT-3</h3>
+<details> <summary>Complete ChatGPT-3 response</summary><h4 id="complete-chatgpt-3-response">Complete ChatGPT-3 response</h4>
+<p>This is a classic problem known as the “Einstein’s Riddle” or “Zebra Puzzle”. To solve this problem, we need to make use of the given information and apply logic to deduce the answer.</p>
+<p>First, let’s list all the given information:</p>
+<ul>
+<li>Englishman lives in the red house.</li>
+<li>Spaniard owns a dog.</li>
+<li>Coffee is drunk in the green house.</li>
+<li>Ukrainian drinks tea.</li>
+<li>Green house is immediately to the right of the ivory house.</li>
+<li>Old Gold smoker owns snails.</li>
+<li>Kools are smoked in the yellow house.</li>
+<li>Milk is drunk in the middle house.</li>
+<li>Norwegian lives in the first house.</li>
+<li>Chesterfields smoker lives next to the house with the fox.</li>
+<li>Kools are smoked in the house next to the house where the horse is kept.</li>
+<li>Lucky Strike smoker drinks orange juice.</li>
+<li>Japanese smokes Parliaments.</li>
+<li>Norwegian lives next to the blue house.</li>
+</ul>
+<p>Using this information, we can create a grid and fill in the information we have:</p>
+<table>
+<thead><tr>
+<th>House</th>
+<th>Color</th>
+<th>Nationality</th>
+<th>Drink</th>
+<th>Smoke</th>
+<th>Pet</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Yellow</td>
+<td>Norwegian</td>
+<td>Water</td>
+<td>Kools</td>
+<td> </td>
+</tr>
+<tr>
+<td>2</td>
+<td>Blue</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr>
+<td>3</td>
+<td>Red</td>
+<td>Englishman</td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr>
+<td>4</td>
+<td>Ivory</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr>
+<td>5</td>
+<td>Green</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+</tbody>
+</table>
+<p>We know that the Norwegian lives in the first house and drinks water, so we can fill that in. We also know that the Japanese smokes Parliaments, so they can’t be in the first house. The Old Gold smoker owns snails, so they can’t be in the first house either.</p>
+<table>
+<thead><tr>
+<th>House</th>
+<th>Color</th>
+<th>Nationality</th>
+<th>Drink</th>
+<th>Smoke</th>
+<th>Pet</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Yellow</td>
+<td>Norwegian</td>
+<td>Water</td>
+<td>Kools</td>
+<td> </td>
+</tr>
+<tr>
+<td>2</td>
+<td>Blue</td>
+<td> </td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr>
+<td>3</td>
+<td>Red</td>
+<td>Englishman</td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr>
+<td>4</td>
+<td>Ivory</td>
+<td> </td>
+<td> </td>
+<td>Old Gold</td>
+<td>Snails</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Green</td>
+<td> </td>
+<td>Coffee</td>
+<td> </td>
+<td> </td>
+</tr>
+</tbody>
+</table>
+<p>We also know that the green house is immediately to the right of the ivory house, so the ivory house must be either the second or the fourth house. However, the Norwegian lives next to the blue house, which means the blue house must be either the second or the fifth house. Since the Japanese smokes Parliaments, they cannot be in the second house, so the blue house must be the fifth house. This means that the ivory house is the second house.</p>
+<table>
+<thead><tr>
+<th>House</th>
+<th>Color</th>
+<th>Nationality</th>
+<th>Drink</th>
+<th>Smoke</th>
+<th>Pet</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Yellow</td>
+<td>Norwegian</td>
+<td>Water</td>
+<td>Kools</td>
+<td> </td>
+</tr>
+<tr>
+<td>2</td>
+<td>Ivory</td>
+<td> </td>
+<td> </td>
+<td>Old Gold</td>
+<td>Snails</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Red</td>
+<td>Englishman</td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr>
+<td>4</td>
+<td>Green</td>
+<td> </td>
+<td>Coffee</td>
+<td> </td>
+<td> </td>
+</tr>
+<tr>
+<td>5</td>
+<td>Blue</td>
+<td> </td>
+<td> </td>
+<td>Parliaments</td>
+<td> </td>
+</tr>
+</tbody>
+</table>
+<p>Now, we know that the green house is the fourth house and that coffee is drunk there. The Englishman lives in the red house, […] so we can fill that in. The Spaniard owns the dog, so they can’t be in any of the other houses. We also know that Kools are smoked in the yellow house, so that must be the third house.</p>
+<table>
+<thead><tr>
+<th>House</th>
+<th>Color</th>
+<th>Nationality</th>
+<th>Drink</th>
+<th>Smoke</th>
+<th>Pet</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Yellow</td>
+<td>Norwegian</td>
+<td>Water</td>
+<td>Kools</td>
+<td> </td>
+</tr>
+<tr>
+<td>2</td>
+<td>Ivory</td>
+<td> </td>
+<td> </td>
+<td>Old Gold</td>
+<td>Snails</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Red</td>
+<td>Englishman</td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr>
+<td>4</td>
+<td>Green</td>
+<td> </td>
+<td>Coffee</td>
+<td> </td>
+<td> </td>
+</tr>
+<tr>
+<td>5</td>
+<td>Blue</td>
+<td> </td>
+<td> </td>
+<td>Parliaments</td>
+<td> </td>
+</tr>
+</tbody>
+</table>
+<p>Now, we know that the Lucky Strike smoker drinks orange juice, so they can’t be in any of the remaining houses. The only remaining options for the pet are a fox and a zebra, and we know that the man who smokes Chesterfields lives next to the man with the fox. Since we don’t know the nationality of the person who smokes Chesterfields, we can’t determine which house the fox is in. However, we also know that Kools are smoked in the house next to the house where the horse is kept. Since we haven’t placed a horse in any of the houses, we can’t determine which house the Kools smoker is in either.</p>
+<p>However, we do know that none of the remaining houses can have a pet other than a fox or a zebra. Therefore, the person who owns the zebra must be in one of the remaining houses. Since we don’t know the nationality of the person who owns the zebra, we can’t determine which house they are in.</p>
+<p>In summary, based on the given information, we can conclude that the person who drinks water is the Norwegian and that the person who owns the zebra cannot be determined with certainty.</p></details><table>
+<thead><tr>
+<th>House</th>
+<th>Color</th>
+<th>Nationality</th>
+<th>Drink</th>
+<th>Smoke</th>
+<th>Pet</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Yellow</td>
+<td>Norwegian</td>
+<td>Water</td>
+<td>Kools</td>
+<td> </td>
+</tr>
+<tr>
+<td>2</td>
+<td>Ivory</td>
+<td> </td>
+<td> </td>
+<td>Old Gold</td>
+<td>Snails</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Red</td>
+<td>Englishman</td>
+<td> </td>
+<td> </td>
+<td> </td>
+</tr>
+<tr>
+<td>4</td>
+<td>Green</td>
+<td> </td>
+<td>Coffee</td>
+<td> </td>
+<td> </td>
+</tr>
+<tr>
+<td>5</td>
+<td>Blue</td>
+<td> </td>
+<td> </td>
+<td>Parliaments</td>
+<td> </td>
+</tr>
+</tbody>
+</table>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>In summary, based on the given information, we can conclude that the person who drinks water is the Norwegian and that the person who owns the zebra cannot be determined with certainty.
+</code></pre></div></div>
+<h3 id="gpt-4">GPT-4</h3>
+<details> <summary>Complete GPT-4 response</summary><h4 id="complete-gpt-4-response">Complete GPT-4 response</h4>
+<p>To solve this problem, we can create a table with 5 columns representing the houses and rows for the colors, nationalities, beverages, cigarettes, and pets. Then we can fill in the table based on the given information:</p>
+<table>
+<thead><tr>
+<th> </th>
+<th> </th>
+<th> </th>
+<th> </th>
+<th> </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+<ol>
+  <li>Norwegian</li>
+</ol>
+</td>
+<td>
+<ol>
+  <li>Blue</li>
+</ol>
+</td>
+<td>
+<ol>
+  <li>Milk</li>
+</ol>
+</td>
+<td>4.</td>
+<td>5.</td>
+</tr>
+<tr>
+<td>
+<ol>
+  <li>Red</li>
+</ol>
+</td>
+<td>2.</td>
+<td>3.</td>
+<td>4.</td>
+<td>5.</td>
+</tr>
+<tr>
+<td>1.</td>
+<td>2.</td>
+<td>3.</td>
+<td>4.</td>
+<td>5.</td>
+</tr>
+<tr>
+<td>1.</td>
+<td>2.</td>
+<td>3.</td>
+<td>4.</td>
+<td>5.</td>
+</tr>
+</tbody>
+</table>
+<p>Now we can start filling in the table based on the given clues:</p>
+<ol>
+<li>The Englishman lives in the red house.<ul><li>Red house: Englishman</li></ul>
+</li>
+<li>The Spaniard owns the dog.<ul><li>Spaniard: Dog</li></ul>
+</li>
+<li>Coffee is drunk in the green house.<ul><li>Green house: Coffee</li></ul>
+</li>
+<li>The Ukrainian drinks tea.<ul><li>Ukrainian: Tea</li></ul>
+</li>
+<li>The green house is immediately to the right of the ivory house.<ul><li>Green house is not the first house because there’s a house to the left. So, the green house can only be in position 3 and the ivory house in position 2. This means that the middle house (house 3) is the green house where coffee is drunk.</li></ul>
+</li>
+<li>The Old Gold smoker owns snails.<ul><li>Old Gold: Snails</li></ul>
+</li>
+<li>Kools are smoked in the yellow house.<ul><li>Yellow house: Kools</li></ul>
+</li>
+<li>Milk is drunk in the middle house.<ul><li>We already know this information.</li></ul>
+</li>
+<li>The Norwegian lives in the first house.<ul><li>We already know this information.</li></ul>
+</li>
+<li>The man who smokes Chesterfields lives in the house next to the man with the fox.<ul><li>Chesterfields: Next to Fox</li></ul>
+</li>
+<li>Kools are smoked in the house next to the house where the horse is kept.<ul><li>Kools: Next to Horse</li></ul>
+</li>
+<li>The Lucky Strike smoker drinks orange juice.<ul><li>Lucky Strike: Orange Juice</li></ul>
+</li>
+<li>The Japanese smokes Parliaments.<ul><li>Japanese: Parliaments</li></ul>
+</li>
+<li>The Norwegian lives next to the blue house.<ul><li>We already know this information.</li></ul>
+</li>
+</ol>
+<p>Now, let’s fill in the information we know into the table:</p>
+<table>
+<thead><tr>
+<th> </th>
+<th> </th>
+<th> </th>
+<th> </th>
+<th> </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+<ol>
+  <li>Norwegian</li>
+</ol>
+</td>
+<td>
+<ol>
+  <li>Blue</li>
+</ol>
+</td>
+<td>
+<ol>
+  <li>Milk</li>
+</ol>
+</td>
+<td>4.</td>
+<td>5.</td>
+</tr>
+<tr>
+<td>1.</td>
+<td>
+<ol>
+  <li>Ivory</li>
+</ol>
+</td>
+<td>
+<ol>
+  <li>Green</li>
+</ol>
+</td>
+<td>4.</td>
+<td>5.</td>
+</tr>
+<tr>
+<td>1.</td>
+<td>2.</td>
+<td>
+<ol>
+  <li>Coffee</li>
+</ol>
+</td>
+<td>4.</td>
+<td>5.</td>
+</tr>
+<tr>
+<td>1.</td>
+<td>2.</td>
+<td>3.</td>
+<td>4.</td>
+<td>5.</td>
+</tr>
+</tbody>
+</table>
+<p>Based on the information we have, we can deduce that the red house must be in position 5 because it’s the only option left for the Englishman. Then, the yellow house with Kools must be in position 1. Now the table looks like this:</p>
+<table>
+<thead><tr>
+<th> </th>
+<th> </th>
+<th> </th>
+<th> </th>
+<th> </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+<ol>
+  <li>Norwegian</li>
+</ol>
+</td>
+<td>
+<ol>
+  <li>Blue</li>
+</ol>
+</td>
+<td>
+<ol>
+  <li>Milk</li>
+</ol>
+</td>
+<td>4.</td>
+<td>
+<ol>
+  <li>English</li>
+</ol>
+</td>
+</tr>
+<tr>
+<td>
+<ol>
+  <li>Yellow</li>
+</ol>
+</td>
+<td>
+<ol>
+  <li>Ivory</li>
+</ol>
+</td>
+<td>
+<ol>
+  <li>Green</li>
+</ol>
+</td>
+<td>4.</td>
+<td>
+<ol>
+  <li>Red</li>
+</ol>
+</td>
+</tr>
+<tr>
+<td>
+<ol>
+  <li>Kools</li>
+</ol>
+</td>
+<td>2.</td>
+<td>
+<ol>
+  <li>Coffee</li>
+</ol>
+</td>
+<td>4.</td>
+<td>5.</td>
+</tr>
+<tr>
+<td>1.</td>
+<td>2.</td>
+<td>3.</td>
+<td>4.</td>
+<td>5.</td>
+</tr>
+</tbody>
+</table>
+<p>Since Kools are next to the house with a horse, the horse must be in house 2. Since Chesterfields are next to the house with a fox, the fox must be in house 3 and Chesterfields in house 4. Now the table looks like this:</p>
+<table>
+<thead><tr>
+<th> </th>
+<th> </th>
+<th> </th>
+<th> </th>
+<th> </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+<ol>
+  <li>Norwegian</li>
+</ol>
+</td>
+<td>
+<ol>
+  <li>Blue</li>
+</ol>
+</td>
+<td>
+<ol>
+  <li>Milk</li>
+</ol>
+</td>
+<td>4.</td>
+<td>
+<ol>
+  <li>English</li>
+</ol>
+</td>
+</tr>
+<tr>
+<td>
+<ol>
+  <li>Yellow</li>
+</ol>
+</td>
+<td>
+<ol>
+  <li>Ivory</li>
+</ol>
+</td>
+<td>
+<ol>
+  <li>Green</li>
+</ol>
+</td>
+<td>4.</td>
+<td>
+<ol>
+  <li>Red</li>
+</ol>
+</td>
+</tr>
+<tr>
+<td>
+<ol>
+  <li>Kools</li>
+</ol>
+</td>
+<td>2.</td>
+<td>
+<ol>
+  <li>Coffee</li>
+</ol>
+</td>
+<td>
+<ol>
+  <li>Chesterfields</li>
+</ol>
+</td>
+<td>5.</td>
+</tr>
+<tr>
+<td>1.</td>
+<td>
+<ol>
+  <li>Horse</li>
+</ol>
+</td>
+<td>
+<ol>
+  <li>Fox</li>
+</ol>
+</td>
+<td>4.</td>
+<td>5.</td>
+</tr>
+</tbody>
+</table>
+<p>Now we can fill in the remaining information. The Ukrainian must be in house 2 and drink tea. The Japanese must be in house 4 and smoke Parliaments. The Spaniard must be in house 5 and own a dog. House 4 must drink Orange Juice and Lucky Strike. The table now looks like this:</p>
+<table>
+<thead><tr>
+<th> </th>
+<th> </th>
+<th> </th>
+<th> </th>
+<th> </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+<ol>
+  <li>Norwegian</li>
+</ol>
+</td>
+<td>
+<ol>
+  <li>Blue</li>
+</ol>
+</td>
+<td>
+<ol>
+  <li>Milk</li>
+</ol>
+</td>
+<td>
+<ol>
+  <li>Japanese</li>
+</ol>
+</td>
+<td>
+<ol>
+  <li>English</li>
+</ol>
+</td>
+</tr>
+<tr>
+<td>
+<ol>
+  <li>Yellow</li>
+</ol>
+</td>
+<td>
+<ol>
+  <li>Ivory</li>
+</ol>
+</td>
+<td>
+<ol>
+  <li>Green</li>
+</ol>
+</td>
+<td>4.</td>
+<td>
+<ol>
+  <li>Red</li>
+</ol>
+</td>
+</tr>
+<tr>
+<td>
+<ol>
+  <li>Kools</li>
+</ol>
+</td>
+<td>2.</td>
+<td>
+<ol>
+  <li>Coffee</li>
+</ol>
+</td>
+<td>
+<ol>
+  <li>Parliaments</li>
+</ol>
+</td>
+<td>5.</td>
+</tr>
+<tr>
+<td>1.</td>
+<td>
+<ol>
+  <li>Horse</li>
+</ol>
+</td>
+<td>
+<ol>
+  <li>Fox</li>
+</ol>
+</td>
+<td>4.</td>
+<td>
+<ol>
+  <li>Dog</li>
+</ol>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Since Old Gold is the only cigarette left, it must be in house 5, which means the snails are also in house 5. House 1 must drink water, and the only pet left is the zebra, which must be in house 3. The final table looks like this: | | | | | | | —— | —— | —— | —- | —- | | 1. Norwegian | 2. Blue | 3. Milk | 4. Japanese | 5. English | | 1. Yellow | 2. Ivory | 3. Green | 4. | 5. Red | | 1. Kools | 2. | 3. Coffee | 4. Parliaments | 5. Old Gold | | 1. Water | 2. Horse | 3. Fox | 4. Orange Juice | 5. Dog | | 1. | 2. Ukrainian | 3. Tea | 4. Zebra | 5. Snails |</p>
+<p>Now we can answer the questions:</p>
+<p>Who drinks water? The Norwegian drinks water.</p>
+<p>Who owns the zebra? The Japanese owns the zebra.</p></details><table>
+<thead><tr>
+<th> </th>
+<th> </th>
+<th> </th>
+<th> </th>
+<th> </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+<ol>
+  <li>Norwegian</li>
+</ol>
+</td>
+<td>
+<ol>
+  <li>Blue</li>
+</ol>
+</td>
+<td>
+<ol>
+  <li>Milk</li>
+</ol>
+</td>
+<td>
+<ol>
+  <li>Japanese</li>
+</ol>
+</td>
+<td>
+<ol>
+  <li>English</li>
+</ol>
+</td>
+</tr>
+<tr>
+<td>
+<ol>
+  <li>Yellow</li>
+</ol>
+</td>
+<td>
+<ol>
+  <li>Ivory</li>
+</ol>
+</td>
+<td>
+<ol>
+  <li>Green</li>
+</ol>
+</td>
+<td>4.</td>
+<td>
+<ol>
+  <li>Red</li>
+</ol>
+</td>
+</tr>
+<tr>
+<td>
+<ol>
+  <li>Kools</li>
+</ol>
+</td>
+<td>2.</td>
+<td>
+<ol>
+  <li>Coffee</li>
+</ol>
+</td>
+<td>
+<ol>
+  <li>Parliaments</li>
+</ol>
+</td>
+<td>
+<ol>
+  <li>Old Gold</li>
+</ol>
+</td>
+</tr>
+<tr>
+<td>
+<ol>
+  <li>Water</li>
+</ol>
+</td>
+<td>
+<ol>
+  <li>Horse</li>
+</ol>
+</td>
+<td>
+<ol>
+  <li>Fox</li>
+</ol>
+</td>
+<td>
+<ol>
+  <li>Orange Juice</li>
+</ol>
+</td>
+<td>
+<ol>
+  <li>Dog</li>
+</ol>
+</td>
+</tr>
+<tr>
+<td>1.</td>
+<td>
+<ol>
+  <li>Ukrainian</li>
+</ol>
+</td>
+<td>
+<ol>
+  <li>Tea</li>
+</ol>
+</td>
+<td>
+<ol>
+  <li>Zebra</li>
+</ol>
+</td>
+<td>
+<ol>
+  <li>Snails</li>
+</ol>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Now we can answer the questions:
+
+Who drinks water? The Norwegian drinks water.
+
+Who owns the zebra? The Japanese owns the zebra.
+</code></pre></div></div>
+<h3 id="chatgpt-4">ChatGPT-4</h3>
+<details> <summary>Complete ChatGPT-4 response</summary><h4 id="complete-chatgpt-4-response">Complete ChatGPT-4 response</h4>
+<p>To solve this problem, we will use a process of elimination based on the given information. We will use the following abbreviations for better readability:</p>
+<p>Nations: E (English), S (Spaniard), U (Ukrainian), N (Norwegian), J (Japanese)</p>
+<p>Colors: R (Red), G (Green), I (Ivory), Y (Yellow), B (Blue)</p>
+<p>Pets: D (Dog), S (Snails), F (Fox), H (Horse), Z (Zebra)</p>
+<p>Drinks: C (Coffee), T (Tea), M (Milk), W (Water), O (Orange Juice)</p>
+<p>Cigarettes: OG (Old Gold), K (Kools), CH (Chesterfields), LS (Lucky Strike), P (Parliaments)</p>
+<p>The Norwegian lives in the first house, and the first house is next to the blue house:</p>
+<p>(N, _, _, _, _) (B, _, _, _, _)</p>
+<p>The Englishman lives in the red house, and the Norwegian lives next to the blue house:</p>
+<p>(_, E, _, _, _) (R, _, _, _, _)</p>
+<p>The green house is immediately to the right of the ivory house:</p>
+<p>(I, _, G, _, _)</p>
+<p>Coffee is drunk in the green house:</p>
+<p>(_, _, C, _, _)</p>
+<p>The Ukrainian drinks tea:</p>
+<p>(_, _, _, T, _)</p>
+<p>Kools are smoked in the yellow house:</p>
+<p>(_, _, _, , Y) (, _, _, _, K)</p>
+<p>Milk is drunk in the middle house:</p>
+<p>(_, _, M, _, _)</p>
+<p>The Old Gold smoker owns snails:</p>
+<p>(_, _, _, , OG) (, _, _, _, S)</p>
+<p>The Spaniard owns the dog:</p>
+<p>(_, S, _, _, ) (, _, D, _, _)</p>
+<p>The man who smokes Chesterfields lives in the house next to the man with the fox:</p>
+<p>(_, _, _, , CH) (, _, _, _, F)</p>
+<p>Kools are smoked in the house next to the house where the horse is kept:</p>
+<p>(_, _, _, _, ) (, _, _, _, H)</p>
+<p>The Lucky Strike smoker drinks orange juice:</p>
+<p>(_, _, _, , LS) (, _, _, O, _)</p>
+<p>The Japanese smokes Parliaments:</p>
+<p>(_, _, _, _, P)</p>
+<p>Now, let’s fill in the information we have so far:</p>
+<p>House 1: (N, _, _, M, _)</p>
+<p>House 2: (E, R, _, _, )</p>
+<p>House 3: (, I, G, C, )</p>
+<p>House 4: (, _, _, T, _)</p>
+<p>House 5: (J, _, _, _, P)</p>
+<p>Since the Norwegian lives in the first house, and the first house is next to the blue house, the second house must be blue:</p>
+<p>House 2: (E, R, _, _, )</p>
+<p>House 3: (, I, G, C, _)</p>
+<p>Since the green house is immediately to the right of the ivory house, the green house must be the third house and the ivory house must be the second:</p>
+<p>House 2: (E, R, I, _, )</p>
+<p>House 3: (, _, G, C, _)</p>
+<p>Now, since the Englishman lives in the red house, the red house must be the first house:</p>
+<p>House 1: (N, _, R, M, _)</p>
+<p>As the Ukrainian drinks tea, they must live in the fourth house:</p>
+<p>House 4: (U, _, _, T, _)</p>
+<p>This means the Spaniard must live in the fifth house:</p>
+<p>House 5: (J, S, _, _, P)</p>
+<p>Since Kools are smoked in the yellow house and it’s the only house without</p>
+<p>[…]</p>
+<p>Since Kools are smoked in the yellow house and it’s the only house without a color, the fifth house must be yellow:</p>
+<p>House 5: (J, S, Y, _, P)</p>
+<p>Now, we know that Kools are smoked in the yellow house, so they are smoked in the fifth house:</p>
+<p>House 5: (J, S, Y, _, P, K)</p>
+<p>The Old Gold smoker owns snails, and since the third house is the only one without a pet, the Old Gold smoker and the snails must be in the third house:</p>
+<p>House 3: (_, _, G, C, OG, S)</p>
+<p>The man who smokes Chesterfields lives next to the man with the fox. Since the only two consecutive houses without a cigarette brand and a pet are the first and second houses, the fox must be in the second house and Chesterfields must be smoked in the first house:</p>
+<p>House 1: (N, _, R, M, CH)</p>
+<p>House 2: (E, _, I, _, F)</p>
+<p>Kools are smoked in the house next to the house where the horse is kept. Since Kools are smoked in the fifth house, the horse must be in the fourth house:</p>
+<p>House 4: (U, _, _, T, H)</p>
+<p>The Lucky Strike smoker drinks orange juice. The only house without a drink is the second house, so the Lucky Strike smoker and orange juice must be in the second house:</p>
+<p>House 2: (E, _, I, O, LS, F)</p>
+<p>Now we have the complete arrangement:</p>
+<p>House 1: (N, _, R, M, CH)</p>
+<p>House 2: (E, , I, O, LS, F)</p>
+<p>House 3: (, _, G, C, OG, S)</p>
+<p>House 4: (U, _, _, T, H)</p>
+<p>House 5: (J, S, Y, _, P, K)</p>
+<p>The only house without a drink is the first house, so the Norwegian must drink water:</p>
+<p>House 1: (N, _, R, W, CH)</p>
+<p>The only house without a pet is the first house, so the Norwegian must own the zebra:</p>
+<p>House 1: (N, _, R, W, CH, Z)</p>
+<p>So the Norwegian drinks water, and the Norwegian owns the zebra.</p></details><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>So the Norwegian drinks water, and the Norwegian owns the zebra. 
+</code></pre></div></div>
+<h2 id="analysis">Analysis</h2>
+<p>To conclude, the GPT models were both able correctly answer both questions posed by the puzzle, whilst the ChatGPT models were only able to solve half of the puzzle.</p>
+<p>What is interesting about this experiment is how no model seemed to obviously cheat. Although this problem is well documented, meaning the answer is readily available via wikipedia, etc., the responses gathered attempted to solve the problem in an iterative style, colating known information in order to progress through the problem, in a manner similar to how a human might attempt to explain / solve the puzzle.</p>
+<p>Ultimately, what we are testing in this experiment is the ability of the model to recall the solution to a well-known logic puzzle and deliver a response in a conversational style mimicking problem-solving. What seems evident, however, is that the ChatGPT training hampers the ability of the underlying GPT model to correctly answer questions. ChatGPT-3 was able to explicitly identify the alternate names of the puzzle in it’s response, which shows how the model can make connections to existing knowledge, but will fail to utilise this in solving a given puzzle.</p>
+<p>It is clear that the GPT models posess strong reasoning and recall characteristics, and whilst the ChatGPT models is able to interact in a conversational manner, this is at the cost of it’s ability to correctly answer questions. This is not a novel conclusion, however the use of ChatGPT as an authority in search engines such as Bing suggests the inaccuracies of the model are being held secondary to user experience.</p>
+<p>Further experiments testing GPT could include a novel logic-puzzle generator, to remove advantage due to recall, and comparison against a wider array of models and constraint satisfaction algorithms.</p>
+<br><hr>
+<ul>
+<li>GitHub: <a href="https://github.com/Cutwell">https://github.com/Cutwell</a>
+</li>
+<li>LinkedIn: <a href="https://www.linkedin.com/in/zacharysmith5/">https://www.linkedin.com/in/zacharysmith5/</a>
+</li>
+</ul>
+<i id="lt" class="d"></i><br> <i id="ps" class="d"></i> <script> document.getElementById("ps").innerHTML="Size: "+document.documentElement.outerHTML.length+" bytes"; window.onload=function(){document.getElementById("lt").innerHTML="Load time: "+(window.performance.timing.domContentLoadedEventEnd-window.performance.timing.navigationStart)+"ms"}; </script>
+</body>
+</html>

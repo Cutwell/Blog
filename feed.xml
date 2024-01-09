@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+>
+	<channel>
+		<title>Zachary's Blog</title>
+		<description>My personal blog, detailing projects in AI, web design, and game development.</description>		
+		<sy:updatePeriod>daily</sy:updatePeriod>
+		<sy:updateFrequency>1</sy:updateFrequency>
+		<link>https://cutwell.github.io/blog/</link>
+		<atom:link href="https://cutwell.github.io/blog//feed.xml" rel="self" type="application/rss+xml" />
+		<lastBuildDate>Mon, 23 Oct 2023 00:00:00 +0000</lastBuildDate>
+
+        <!-- update default to max number of posts to render -->
+		
+		
+			<item>
+				<title>Canary - A framework for detecting prompt injection attacks.</title>
+				
+				
+					<description>&lt;h2 id=&quot;overview&quot;&gt;Overview&lt;/h2&gt;
+</description>
+				
+				<pubDate>Mon, 23 Oct 2023 00:00:00 +0000</pubDate>
+				<link>https://cutwell.github.io/blog//canary-llm/</link>
+				<guid isPermaLink="true">https://cutwell.github.io/blog//canary-llm/</guid>
+			</item>
+		
+			<item>
+				<title>🦓 Can GPT-4 solve a logic puzzle?</title>
+				
+				
+					<description>&lt;p&gt;&lt;img src=&quot;/_posts/2023-03-19-zebra-problem/DALLE-a-zebra-solving-a-jigsaw-puzzle.png&quot; alt=&quot;A zebra solving a jigsaw puzzle, DALLE2&quot; /&gt;&lt;/p&gt;
+</description>
+				
+				<pubDate>Sat, 18 Mar 2023 00:00:00 +0000</pubDate>
+				<link>https://cutwell.github.io/blog//zebra-problem/</link>
+				<guid isPermaLink="true">https://cutwell.github.io/blog//zebra-problem/</guid>
+			</item>
+		
+			<item>
+				<title>🌌 The Universe is a dark forest.</title>
+				
+				
+					<description>&lt;p&gt;I recently finished &lt;a href=&quot;https://www.goodreads.com/book/show/23168817-the-dark-forest&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;The Dark Forest&lt;/code&gt;&lt;/a&gt; by Liu Cixin (translated by Joel Martinsen), and found the use of the Dark Forest theory to be an excellent use of real life game theory in science fiction.&lt;/p&gt;
+</description>
+				
+				<pubDate>Tue, 17 Jan 2023 00:00:00 +0000</pubDate>
+				<link>https://cutwell.github.io/blog//dark-forest-hypothesis/</link>
+				<guid isPermaLink="true">https://cutwell.github.io/blog//dark-forest-hypothesis/</guid>
+			</item>
+		
+			<item>
+				<title>Too dangerous to live, too unregulated to die.</title>
+				
+				
+					<description>&lt;p&gt;&lt;em&gt;How stable diffusion is disrupting artists’ livelihoods, and why “AI Creatives” won’t stop ripping off their favourite artwork.&lt;/em&gt;&lt;/p&gt;
+</description>
+				
+				<pubDate>Sun, 11 Dec 2022 00:00:00 +0000</pubDate>
+				<link>https://cutwell.github.io/blog//ai-art-vs-artists/</link>
+				<guid isPermaLink="true">https://cutwell.github.io/blog//ai-art-vs-artists/</guid>
+			</item>
+		
+			<item>
+				<title>Approximating the alpha shape of spatial data using Python and Shapely.</title>
+				
+				
+					<description>&lt;p&gt;&lt;img src=&quot;/_posts/2022-07-28-spatial-data-boundary/outlined.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+</description>
+				
+				<pubDate>Thu, 28 Jul 2022 00:00:00 +0000</pubDate>
+				<link>https://cutwell.github.io/blog//spatial-data-boundary/</link>
+				<guid isPermaLink="true">https://cutwell.github.io/blog//spatial-data-boundary/</guid>
+			</item>
+		
+			<item>
+				<title>Using a neural network to augment wind data.</title>
+				
+				
+					<description>&lt;p&gt;&lt;img src=&quot;/_posts/2022-07-27-neural-network-augmentation/wind.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+</description>
+				
+				<pubDate>Wed, 27 Jul 2022 00:00:00 +0000</pubDate>
+				<link>https://cutwell.github.io/blog//neural-network-augmentation/</link>
+				<guid isPermaLink="true">https://cutwell.github.io/blog//neural-network-augmentation/</guid>
+			</item>
+		
+			<item>
+				<title>Using neural networks to colourise images from the Opportunity Mars Rover.</title>
+				
+				
+					<description>&lt;p&gt;&lt;img src=&quot;/_posts/2021-08-01-opportunity-rover-colourised/1.png&quot; alt=&quot;figure 0&quot; title=&quot;figure 0&quot; /&gt;&lt;/p&gt;
+</description>
+				
+				<pubDate>Sun, 01 Aug 2021 00:00:00 +0000</pubDate>
+				<link>https://cutwell.github.io/blog//opportunity-rover-colourised/</link>
+				<guid isPermaLink="true">https://cutwell.github.io/blog//opportunity-rover-colourised/</guid>
+			</item>
+		
+	</channel>
+</rss>
