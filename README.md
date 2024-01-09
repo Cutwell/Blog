@@ -1,5 +1,7 @@
 # Hi, I'm Zachary.
 
+[![Build and Deploy to Github Pages](https://github.com/Cutwell/blog/actions/workflows/build-jekyll.yml/badge.svg?branch=main)](https://github.com/Cutwell/blog/actions/workflows/build-jekyll.yml)
+
 Generative AI and Machine Learning Engineer working [@Datatonic](https://datatonic.com/).
 
 * GitHub: [https://github.com/Cutwell][1]
